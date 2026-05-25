@@ -4,12 +4,44 @@
 package main
 
 import (
-	"log"
+	"fmt"
+	"io"
+	"os"
+	"strings"
 
 	plugin "github.com/SemRels/updater-nuget/internal/plugin"
 )
 
 func main() {
-	publisher := plugin.NewPublisher(plugin.Config{})
-	log.Printf("updater-nuget plugin ready: updates NuGet package versions and publishes packages (%T)", publisher)
+	os.Exit(run(os.Stdout, os.Stderr, os.Getenv))
+}
+
+func run(stdout, stderr io.Writer, getenv func(string) string) int {
+	version := getenv("SEMREL_VERSION")
+	if version == "" {
+		version = getenv("SEMREL_NEXT_VERSION")
+	}
+	if version == "" {
+		fmt.Fprintln(stderr, "updater-nuget: SEMREL_VERSION is required")
+		return 1
+	}
+	version = strings.TrimPrefix(version, "v")
+
+	file := getenv("SEMREL_PLUGIN_FILE")
+	if file == "" {
+		file = "project.csproj"
+	}
+
+	if getenv("SEMREL_DRY_RUN") == "true" {
+		fmt.Fprintf(stdout, "updater-nuget: [dry-run] would update %s to version %s\n", file, version)
+		return 0
+	}
+
+	if err := plugin.NewUpdater().Update(file, version); err != nil {
+		fmt.Fprintln(stderr, "updater-nuget:", err)
+		return 1
+	}
+
+	fmt.Fprintf(stdout, "updater-nuget: updated %s to version %s\n", file, version)
+	return 0
 }
