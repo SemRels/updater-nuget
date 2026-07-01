@@ -1,6 +1,6 @@
 # updater-nuget
 
-[![Latest Release](https://img.shields.io/github/v/release/SemRels/updater-nuget?label=version\&color=blue)](https://github.com/SemRels/updater-nuget/releases/latest)
+[![Latest Release](https://img.shields.io/github/v/release/SemRels/updater-nuget?label=version&color=blue)](https://github.com/SemRels/updater-nuget/releases/latest)
 
 Updates the version property in a NuGet project file.
 
