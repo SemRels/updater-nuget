@@ -27,7 +27,7 @@ func (u *Updater) Update(path, version string) error {
 		return fmt.Errorf("read %s: %w", path, err)
 	}
 	if !versionPattern.Match(data) {
-		return fmt.Errorf("Version element not found in %s", path)
+		return fmt.Errorf("version element not found in %s", path)
 	}
 	updated := versionPattern.ReplaceAllString(string(data), `${1}`+version+`${2}`)
 	if err := os.WriteFile(path, []byte(updated), 0o644); err != nil {
