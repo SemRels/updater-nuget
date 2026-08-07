@@ -15,7 +15,11 @@ func TestRunUpdatesProjectFile(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(dir)
+	t.Cleanup(func() {
+		if err := os.RemoveAll(dir); err != nil {
+			t.Errorf("remove temporary directory: %v", err)
+		}
+	})
 
 	file := filepath.Join(dir, "demo.csproj")
 	if err := os.WriteFile(file, []byte("<Project><Version>1.0.0</Version></Project>"), 0o644); err != nil {

@@ -14,7 +14,11 @@ func TestUpdaterUpdateProjectFile(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(dir)
+	t.Cleanup(func() {
+		if err := os.RemoveAll(dir); err != nil {
+			t.Errorf("remove temporary directory: %v", err)
+		}
+	})
 
 	file := filepath.Join(dir, "demo.csproj")
 	if err := os.WriteFile(file, []byte("<Project>\n  <Version>1.2.3</Version>\n</Project>\n"), 0o644); err != nil {
@@ -50,7 +54,11 @@ func TestUpdaterMissingVersion(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(dir)
+	t.Cleanup(func() {
+		if err := os.RemoveAll(dir); err != nil {
+			t.Errorf("remove temporary directory: %v", err)
+		}
+	})
 
 	file := filepath.Join(dir, "demo.csproj")
 	if err := os.WriteFile(file, []byte("<Project></Project>\n"), 0o644); err != nil {
@@ -58,7 +66,7 @@ func TestUpdaterMissingVersion(t *testing.T) {
 	}
 
 	err = NewUpdater().Update(file, "1.3.0")
-	if err == nil || !strings.Contains(err.Error(), "Version element not found") {
+	if err == nil || !strings.Contains(err.Error(), "version element not found") {
 		t.Fatalf("expected version error, got %v", err)
 	}
 }
