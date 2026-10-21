@@ -1,6 +1,10 @@
 # updater-nuget
 
 [![Latest Release](https://img.shields.io/github/v/release/SemRels/updater-nuget?label=version&color=blue)](https://github.com/SemRels/updater-nuget/releases/latest)
+[![CI](https://github.com/SemRels/updater-nuget/actions/workflows/ci.yml/badge.svg)](https://github.com/SemRels/updater-nuget/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/SemRels/updater-nuget)](LICENSE)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/SemRels/updater-nuget/badge)](https://scorecard.dev/viewer/?uri=github.com/SemRels/updater-nuget)
+[![REUSE status](https://api.reuse.software/badge/github.com/SemRels/updater-nuget)](https://api.reuse.software/info/github.com/SemRels/updater-nuget)
 
 Updates the version property in a NuGet project file.
 
