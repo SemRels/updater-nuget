@@ -39,19 +39,21 @@ cosign verify ghcr.io/semrels/updater-nuget:latest \
 
 ```yaml
 plugins:
-  - name: updater-nuget
-    path: ~/.semrel/plugins/semrel-plugin-updater-nuget
-    env:
-      SEMREL_PLUGIN_FILE: "src/MyApp/MyApp.csproj"
-      SEMREL_PLUGIN_PROPERTY: "Version"
+  - uses: "@semrel/updater-nuget"
+    phase: pre-tag
+    args:
+      file: "src/MyApp/MyApp.csproj"
+      property: "Version"
 ```
 
-## `SEMREL_PLUGIN_*` variables
+## Options
 
-| Name | Required | Description | Default |
-| --- | --- | --- | --- |
-| `SEMREL_PLUGIN_FILE` | Optional | Path or glob that resolves to the `.csproj` file to update. | *.csproj |
-| `SEMREL_PLUGIN_PROPERTY` | Optional | XML property name that stores the package version. | Version |
+Every option can be set as an entry under `args` in `.semrel.yaml`. semrel passes each entry to the plugin as the environment variable shown in the table, so you can also set that variable directly (for example in your CI environment) instead of using `args`.
+
+| Argument | Environment variable | Required | Description | Default |
+| --- | --- | --- | --- | --- |
+| `file` | `SEMREL_PLUGIN_FILE` | Optional | Path or glob that resolves to the `.csproj` file to update. | *.csproj |
+| `property` | `SEMREL_PLUGIN_PROPERTY` | Optional | XML property name that stores the package version. | Version |
 
 ## `SEMREL_*` release context used
 
