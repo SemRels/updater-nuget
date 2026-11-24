@@ -1,6 +1,6 @@
 # Code of Conduct
 
-updater-nuget is committed to providing a welcoming and harassment-free community.
+`updater-nuget` is committed to providing a welcoming and harassment-free community.
 
 ## Our Pledge
 
