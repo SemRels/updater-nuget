@@ -36,7 +36,7 @@ func run(stdout, stderr io.Writer, getenv func(string) string) int {
 		file = "project.csproj"
 	}
 
-	if strings.EqualFold(getenv("SEMREL_DRY_RUN"), "true") || strings.EqualFold(getenv("SEMREL_PLUGIN_DRY_RUN"), "true") {
+	if strings.EqualFold(getenv("SEMREL_DRY_RUN"), "true") || getenv("SEMREL_DRY_RUN") == "1" || strings.EqualFold(getenv("SEMREL_PLUGIN_DRY_RUN"), "true") {
 		diff, err := plugin.NewUpdater().Diff(file, version)
 		if err != nil {
 			_, _ = fmt.Fprintln(stderr, "updater-nuget:", err)
